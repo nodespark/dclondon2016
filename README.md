@@ -1,23 +1,21 @@
-# Elasticsearch sense commands dclondon2016:
-
-# Check if the Elasticsearch is up and running.
+## Check if the Elasticsearch is up and running.
 GET /
 
-# Create an index into Elasticsearch.
+## Create an index into Elasticsearch.
 PUT /london
 {
   "number_of_shards": 1, 
   "number_of_replicas": 0
 }
 
-# Get index settings.
+## Get index settings.
 GET /london/_settings
 
-# Delete an index.
+## Delete an index.
 DELETE /london
 
 GET /_all
-# Get cluster healt and state
+## Get cluster healt and state
 GET /_cluster/health
 GET /_cluster/state
 
@@ -26,10 +24,10 @@ GET /_cat/indices
 
 
 #########################################################
-#                 CRUD DOCUMENT
+##               CRUD DOCUMENT
 
-# Create a document.
-# Specify the /[INDEX]/[DOCUMENT TYPE]/[ID]
+## Create a document.
+## Specify the /[INDEX]/[DOCUMENT TYPE]/[ID]
 PUT /london/news/1
 {
   "title": "A news title",
@@ -41,17 +39,17 @@ PUT /london/news/1
   "publish_date": "2016-02-29T20:00:00-0200"
 }
 
-# Check the mapping (schema).
+## Check the mapping (schema).
 GET /london/news/_mapping
 GET /london/_mapping
 
-# Retrive the document.
+## Retrive the document.
 GET /london/news/1
 
-# Retrive a non existing document.
+## Retrive a non existing document.
 GET /london/news/nonexists
 
-# Put other document
+## Put other document
 PUT /london/news/2
 {
   "title": "News about London Camp 2016",
@@ -62,11 +60,11 @@ PUT /london/news/2
   "publish_date": "2016-03-01T20:00:00-0200"
 }
 
-# Retrive the second document.
+## Retrive the second document.
 GET /london/news/2
 
-# 1. Override it - PUT it again. COMPLETELY OVERRIDE!
-# 2. Partial update via UPDATE API - POST
+## 1. Override it - PUT it again. COMPLETELY OVERRIDE!
+## 2. Partial update via UPDATE API - POST
 POST /london/news/2/_update
 {
   "doc": {
@@ -75,12 +73,12 @@ POST /london/news/2/_update
   }
 }
 
-# Retrive the update document.
+## Retrive the update document.
 GET /london/news/2
 
 GET /london/news/_mapping
 
-# Using the version of the document.
+## Using the version of the document.
 GET /london/news/2
 PUT /london/news/2?version=6
 {
@@ -92,12 +90,11 @@ PUT /london/news/2?version=6
   "publish_date": "2016-03-01T20:00:00-0200"
 }
 
-#  Delete document
+## Delete document
 DELETE /london/news/2
 
 ########################################################
-#               BULK API
-
+##               BULK API
 POST /london/news/_bulk
 {"index":{"_id": 3}}
 {"title": "London Camp 2016 BULK API","author":{"firstname": "Shay","lastname":  "Banon"},"publish_date": "2016-03-02T20:00:00-0200"}
@@ -112,7 +109,7 @@ POST /london/news/_bulk
 # SEARCH API
 GET /london/news/_search
 
-# Search using the DSL
+## Search using the DSL
 POST /london/news/_search
 {
   "query": {
@@ -122,7 +119,7 @@ POST /london/news/_search
   }
 }
 
-# Aggregation search.
+## Aggregation search.
 POST /london/news/_search
 {
   "query": {
@@ -145,7 +142,7 @@ POST /london/news/_search
   }
 }
 
-# The power of DSL
+## The power of DSL
 GET /london/news/_search
 {
   "query": {
@@ -177,9 +174,9 @@ GET /london/news/_search
 
 
 
-# Text analysis phase = Tokenization + Normalization.
-# Tokenization is done by one tokenized and normalization
-# is made by 0 or more token filters like lowercase and etc.
+## Text analysis phase = Tokenization + Normalization.
+## Tokenization is done by one tokenized and normalization
+## is made by 0 or more token filters like lowercase and etc.
 GET /_analyze?tokenizer=standard
 {
   "analyzer" : "standard",
@@ -187,6 +184,5 @@ GET /_analyze?tokenizer=standard
   "text" : "Drupal Camp London has been great!"
 }
 
-# Cat all the installed plugins.
+## Cat all the installed plugins.
 GET /_cat/plugins
-
